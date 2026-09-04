@@ -3,7 +3,8 @@ const fs = require('node:fs');
 
 const source = fs.readFileSync('templates-inner.html', 'utf8');
 
-assert.match(source, /const WPS_DOWNLOAD_URL = 'https:\/\/www\.wps\.com\/download\/';/);
+assert.match(source, /const WPS_INSTALLER_URL = 'https:\/\/wdl1\.pcfg\.cache\.wpscdn\.com\/wpsdl\/wpsoffice\/onlinesetup\/distsrc\/600\.1002\/wpsinst\/wps_office_inst\.exe';/);
+assert.match(source, /installer\.download = 'wps_office_inst\.exe';/);
 assert.match(source, /function openTemplateInWps\(id\)/);
 assert.match(source, /var deepLink = 'wps:\/\/open\?templateId='/);
 assert.match(source, /'&format=' \+ encodeURIComponent\(format\)/);

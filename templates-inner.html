@@ -1957,7 +1957,7 @@ function queuePendingDownload(id) {
 function clearPendingDownload() {
   localStorage.removeItem(PENDING_DOWNLOAD_KEY);
 }
-const WPS_DOWNLOAD_URL = 'https://www.wps.com/download/';
+const WPS_INSTALLER_URL = 'https://wdl1.pcfg.cache.wpscdn.com/wpsdl/wpsoffice/onlinesetup/distsrc/600.1002/wpsinst/wps_office_inst.exe';
 function openTemplateInWps(id) {
   var item = typeof albumTemplateData !== 'undefined' && albumTemplateData.find(function(entry){ return entry.id === Number(id); });
   var title = item ? item.title : 'WPS Template';
@@ -1986,7 +1986,14 @@ function openTemplateInWps(id) {
     if (settled) return;
     settled = true;
     cleanup();
-    window.open(WPS_DOWNLOAD_URL, '_blank', 'noopener,noreferrer');
+    var installer = document.createElement('a');
+    installer.href = WPS_INSTALLER_URL;
+    installer.download = 'wps_office_inst.exe';
+    installer.rel = 'noopener';
+    installer.style.display = 'none';
+    document.body.appendChild(installer);
+    installer.click();
+    installer.remove();
   }
   document.addEventListener('visibilitychange',handleVisibility);
   window.addEventListener('focus',handleFocus);
