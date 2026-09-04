@@ -38,6 +38,9 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Copy template iframe
+        run: cp templates-inner.html dist/templates-inner.html
+
       - name: Prepare SPA fallback
         run: cp dist/index.html dist/404.html
 
