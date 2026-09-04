@@ -16,7 +16,7 @@ assert.match(source, /'-demo-download\.' \+ extension/);
 assert.match(source, /dimensionLabel:'Aspect ratio',ratio:'16:9 widescreen'/);
 assert.match(source, /dimensionLabel:'Page size',ratio:'A4 portrait'/);
 assert.match(source, /dimensionLabel:'Layout',ratio:'16:9 dashboard'/);
-assert.match(source, /copy\.dimensionLabel \+ '<\/span><strong>' \+ copy\.ratio/);
+assert.match(source, /copy\.dimensionLabel \+ ':<\/span><strong>' \+ copy\.ratio/);
 assert.match(source, /apps:\['WPS Office','Microsoft PowerPoint','Google Slides','Apple Keynote','Adobe Acrobat'\]/);
 assert.match(source, /apps:\['WPS Office','Microsoft Word','Google Docs','Apple Pages','Notion','Adobe Acrobat'\]/);
 assert.match(source, /apps:\['WPS Office','Microsoft Excel','Google Sheets','Apple Numbers','Notion','Adobe Acrobat'\]/);
