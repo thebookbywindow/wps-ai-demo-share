@@ -3,7 +3,7 @@ const fs = require('node:fs');
 
 const source = fs.readFileSync('templates-inner.html', 'utf8');
 
-assert.match(source, /\.template-detail-thumbs\{display:flex;align-items:stretch;gap:13px;width:fit-content;max-width:100%;overflow-x:auto/);
+assert.match(source, /\.template-detail-thumbs\{align-items:center;width:100%;max-width:none;overflow:hidden/);
 assert.match(source, /function ensureGalleryPlaceholders\(\)/);
 assert.match(source, /\.template-detail-thumb\{height:120px;width:160px;flex:0 0 160px/);
 assert.doesNotMatch(source, /\.gallery-count-[1-5]\{grid-template-columns/);
