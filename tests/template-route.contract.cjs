@@ -4,7 +4,8 @@ const fs = require('node:fs');
 const shell = fs.readFileSync('index.html', 'utf8');
 const templates = fs.readFileSync('templates-inner.html', 'utf8');
 
-assert.match(shell, /location\.pathname\.match\(\/\^\\\/\(\[a-z\]\{2\}/);
+assert.match(shell, /location\.pathname\.replace\(\/\^\\\/wps-ai-demo-share/);
+assert.match(shell, /path\.match\(\/\^\\\/\(\[a-z\]\{2\}/);
 assert.match(shell, /function showTemplates\(route='\/en-us\/resources\/'/);
 assert.match(shell, /showTemplates\('\/en-us\/resources\/'/);
 assert.match(shell, /id="templatesLink" href="\/en-us\/resources\/"/);

@@ -235,8 +235,9 @@ function resetTemplatesToHome(){
   if(templateWindow&&typeof templateWindow.navigate==='function')templateWindow.navigate('home');
 }
 function currentTemplateRoute(){
-  const match=location.pathname.match(/^\/([a-z]{2}(?:-[a-z]{2})?)\/resources(?:\/|$)/i);
-  return match?location.pathname.slice(match.index)+(location.search||''):null;
+  const path=location.pathname.replace(/^\/wps-ai-demo-share(?=\/)/i,'');
+  const match=path.match(/^\/([a-z]{2}(?:-[a-z]{2})?)\/resources(?:\/|$)/i);
+  return match?path.slice(match.index)+(location.search||''):null;
 }
 function publicTemplatePath(route){
   const prefix=location.hostname.endsWith('.github.io')?'/wps-ai-demo-share':'';
