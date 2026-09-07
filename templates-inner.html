@@ -3146,7 +3146,8 @@ function ensureGalleryPlaceholders(){
     if (!thumbs) return;
     thumbs.querySelectorAll('.template-detail-thumb.is-placeholder').forEach(function(placeholder){ placeholder.remove(); });
     var realCount = thumbs.querySelectorAll('.template-detail-thumb:not(.is-placeholder)').length;
-    gallery.classList.toggle('gallery-fixed-five', realCount > 0 && realCount <= 5);
+    gallery.classList.toggle('gallery-fixed-five', realCount > 1 && realCount <= 5);
+    if (realCount === 1) return;
     if (realCount > 5) return;
     for (var index = realCount; index < 5; index++) {
       var placeholder = document.createElement('span');

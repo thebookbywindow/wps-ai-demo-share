@@ -5,6 +5,7 @@ const source = fs.readFileSync('templates-inner.html', 'utf8');
 
 assert.match(source, /\.gallery-fixed-five \.template-detail-thumbs\{display:grid;/);
 assert.match(source, /function ensureGalleryPlaceholders\(\)/);
+assert.match(source, /if \(realCount === 1\) return;/);
 assert.match(source, /template-detail-thumb is-placeholder/);
 assert.match(source, /\.gallery-fixed-five \.template-detail-thumb\.is-placeholder\{border:1px solid #e8ecf2;background:#f7f8fb;/);
 assert.doesNotMatch(source, /\.gallery-fixed-five \.template-detail-thumb\.is-placeholder::before/);
