@@ -11,6 +11,7 @@ assert.match(source, /thumbs\.classList\.toggle\('is-scrollable', thumbs\.scroll
 assert.match(source, /function syncGalleryNavigationPosition\(thumbs\)/);
 assert.match(source, /previous\.style\.left = \(offset \+ 8\) \+ 'px'/);
 assert.match(source, /next\.style\.left = \(offset \+ thumbs\.clientWidth - 44\) \+ 'px'/);
+assert.match(source, /thumbs\.scrollTo\(\{left: delta < 0 \? 0 : thumbs\.scrollWidth, behavior:'smooth'\}\)/);
 assert.match(source, /\.template-detail-thumbs\.is-scrollable \.template-detail-gallery-nav\{display:flex\}/);
 assert.match(source, /\.template-detail-thumbs\.is-scrollable\.at-start \.template-detail-gallery-prev\{display:none\}/);
 assert.match(source, /\.template-detail-thumbs\.is-scrollable\.at-end \.template-detail-gallery-next\{display:none\}/);

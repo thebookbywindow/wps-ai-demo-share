@@ -3075,12 +3075,9 @@ function selectTemplatePreview(button, sprite, index) {
 }
 
 function selectTemplatePreviewByIndex(delta) {
-  var thumbs = Array.from(document.querySelectorAll('.template-detail-thumb'));
-  if (thumbs.length < 2) return;
-  var current = thumbs.findIndex(function(thumb) { return thumb.classList.contains('active'); });
-  var next = current + delta;
-  if (next < 0 || next >= thumbs.length) return;
-  thumbs[next].click();
+  var thumbs = document.querySelector('.template-detail-thumbs');
+  if (!thumbs) return;
+  thumbs.scrollTo({left: delta < 0 ? 0 : thumbs.scrollWidth, behavior:'smooth'});
 }
 
 function toggleTemplateDetailFaq(button) {
