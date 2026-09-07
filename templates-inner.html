@@ -3170,7 +3170,10 @@ function decorateTemplateBackButton(){
     link.className = 'template-detail-breadcrumb-link';
     link.type = 'button';
     link.textContent = label;
-    link.addEventListener('click',function(){ navigate('home'); });
+    link.addEventListener('click',function(){
+      if (label === 'Home') window.parent.postMessage({type:'shell-navigate',target:'home'},'*');
+      else navigate('home');
+    });
     nav.appendChild(link);
     var separator = document.createElement('span');
     separator.className = 'template-detail-breadcrumb-separator';
