@@ -11,6 +11,7 @@ assert.doesNotMatch(source, /\.gallery-fixed-five \.template-detail-thumb\.is-pl
 assert.doesNotMatch(source, /\.gallery-fixed-five \.template-detail-thumb\.is-placeholder::after/);
 assert.match(source, /\.gallery-size-1 \.template-detail-main-preview\{height:auto;/);
 assert.match(source, /\.gallery-size-1 \.template-detail-slide\{width:100%;height:auto;aspect-ratio:4 \/ 3;/);
+assert.match(source, /\.template-preview-lightbox \.template-detail-slide\{width:min\(92vw,1100px\);height:auto;aspect-ratio:4 \/ 3;/);
 assert.match(source, /\.gallery-size-1 \.template-detail-caption\{position:absolute;/);
 assert.match(source, /\.gallery-size-1 \.template-detail-caption strong\{display:block\}/);
 assert.match(source, /\.gallery-size-1 #templateDetailCounter\{display:block\}/);
