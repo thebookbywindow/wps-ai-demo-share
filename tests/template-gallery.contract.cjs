@@ -25,6 +25,7 @@ assert.match(source, /document\.addEventListener\('keydown'/);
 assert.match(source, /template-detail-breadcrumb/);
 assert.match(source, /aria-current.*page/);
 assert.match(source, /breadcrumbItems/);
+assert.match(source, /var breadcrumbItems = \['Home','Templates'\]/);
 assert.match(source, /type:'shell-navigate',target:'home'/);
 
 console.log('template gallery contract passed');
