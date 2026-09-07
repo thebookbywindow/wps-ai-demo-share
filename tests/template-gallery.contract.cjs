@@ -3,10 +3,15 @@ const fs = require('node:fs');
 
 const source = fs.readFileSync('templates-inner.html', 'utf8');
 
-assert.match(source, /\.template-detail-thumbs\{align-items:center;width:100%;max-width:none;overflow:hidden/);
+assert.match(source, /\.template-detail-thumbs\{align-items:center;width:fit-content;max-width:100%;margin-left:auto;margin-right:auto;overflow:hidden/);
 assert.match(source, /function relocateGalleryNavigation\(\)/);
+assert.match(source, /function updateGalleryNavigationState\(\)/);
 assert.match(source, /thumbs\.insertBefore\(prev, thumbs\.firstChild\)/);
-assert.match(source, /\.template-detail-thumbs\[class\*="gallery-count-"\]\{width:100%;max-width:none;grid-template-columns:none;margin:0;display:flex;overflow:hidden\}/);
+assert.match(source, /thumbs\.classList\.toggle\('is-scrollable', thumbs\.scrollWidth > thumbs\.clientWidth \+ 1\)/);
+assert.match(source, /\.template-detail-thumbs\.is-scrollable \.template-detail-gallery-nav\{display:flex\}/);
+assert.match(source, /\.template-detail-thumbs\[class\*="gallery-count-"\]\{width:fit-content;max-width:100%;grid-template-columns:none;margin-left:auto;margin-right:auto;display:flex;overflow:hidden\}/);
+assert.match(source, /\.template-detail-gallery\.gallery-size-1 \.template-detail-thumbs\{width:156px;max-width:156px;margin-left:auto;margin-right:auto\}/);
+assert.match(source, /\.template-detail-gallery\.gallery-size-1 \.template-detail-thumb\{width:156px;flex-basis:156px\}/);
 assert.match(source, /function ensureGalleryPlaceholders\(\)/);
 assert.match(source, /\.template-detail-thumb\{height:120px;width:160px;flex:0 0 160px/);
 assert.doesNotMatch(source, /\.gallery-count-[1-5]\{grid-template-columns/);
