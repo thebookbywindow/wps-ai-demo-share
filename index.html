@@ -243,6 +243,7 @@ function publicTemplatePath(route){
   const prefix=location.hostname.endsWith('.github.io')?'/wps-ai-demo-share':'';
   return prefix+(route.startsWith('/')?route:'/'+route);
 }
+templatesLink.setAttribute('href',publicTemplatePath('/en-us/resources/'));
 function applyTemplateRoute(route){
   if(!templatesLoaded)return;
   const apply=()=>{const templateWindow=templatesFrame.contentWindow;if(templateWindow&&typeof templateWindow.navigateByPath==='function')templateWindow.navigateByPath(route);};
