@@ -914,6 +914,8 @@ img{max-width:100%;display:block}
 .template-detail-thumbs{position:relative}
 .template-detail-thumbs .template-detail-gallery-nav{position:absolute;top:50%;z-index:3;display:none;align-items:center;justify-content:center;flex:none;transform:translateY(-50%)}
 .template-detail-thumbs.is-scrollable .template-detail-gallery-nav{display:flex}
+.template-detail-thumbs.is-scrollable.at-start .template-detail-gallery-prev{display:none}
+.template-detail-thumbs.is-scrollable.at-end .template-detail-gallery-next{display:none}
 .template-detail-thumbs .template-detail-gallery-prev{left:8px}
 .template-detail-thumbs .template-detail-gallery-next{right:8px}
 .template-detail-thumbs .template-detail-thumb{flex:0 0 160px;min-width:0}
@@ -3179,6 +3181,9 @@ function updateGalleryNavigationState(){
 
 function syncGalleryNavigationPosition(thumbs){
   var offset = thumbs.scrollLeft;
+  var maxScroll = Math.max(0, thumbs.scrollWidth - thumbs.clientWidth);
+  thumbs.classList.toggle('at-start', offset <= 1);
+  thumbs.classList.toggle('at-end', offset >= maxScroll - 1);
   var previous = thumbs.querySelector('.template-detail-gallery-prev');
   var next = thumbs.querySelector('.template-detail-gallery-next');
   if (previous) {
