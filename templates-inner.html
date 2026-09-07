@@ -3065,10 +3065,6 @@ function selectTemplatePreview(button, sprite, index) {
   var counter = document.getElementById('templateDetailCounter');
   var total = document.querySelectorAll('.template-detail-thumb').length;
   if (counter) counter.textContent = index + '/' + total;
-  var previous = document.querySelector('.template-detail-gallery-prev');
-  var next = document.querySelector('.template-detail-gallery-next');
-  if (previous) previous.disabled = index <= 1;
-  if (next) next.disabled = index >= total;
   button.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
   var caption = document.getElementById('templateDetailCaption');
   if (caption) caption.textContent = button.getAttribute('data-caption') || '';
@@ -3158,6 +3154,8 @@ function relocateGalleryNavigation(){
     if (!thumbs) return;
     var prev = preview.querySelector('.template-detail-gallery-prev');
     var next = preview.querySelector('.template-detail-gallery-next');
+    if (prev) prev.disabled = false;
+    if (next) next.disabled = false;
     if (prev && !thumbs.contains(prev)) thumbs.insertBefore(prev, thumbs.firstChild);
     if (next && !thumbs.contains(next)) thumbs.appendChild(next);
     if (!thumbs.dataset.galleryNavBound) {
