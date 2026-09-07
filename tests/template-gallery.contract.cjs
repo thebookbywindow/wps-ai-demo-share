@@ -22,10 +22,8 @@ assert.match(source, /if \(!source\) return;/);
 assert.doesNotMatch(source, /!document\.querySelector\('\.gallery-size-1'\)/);
 assert.match(source, /event\.target\.closest\('\.template-detail-gallery #templateDetailSlide'\)/);
 assert.match(source, /document\.addEventListener\('keydown'/);
-assert.match(source, /template-detail-back-icon/);
-assert.match(source, /Back to Templates/);
-assert.match(source, /template-detail-back-icon.*<svg/);
-assert.match(source, /viewBox="0 0 16 16"/);
-assert.doesNotMatch(source, /template-detail-back-icon.*&#8592;/);
+assert.match(source, /template-detail-breadcrumb/);
+assert.match(source, /aria-current.*page/);
+assert.match(source, /breadcrumbItems/);
 
 console.log('template gallery contract passed');

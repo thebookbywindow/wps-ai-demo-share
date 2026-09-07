@@ -929,6 +929,11 @@ img{max-width:100%;display:block}
 .template-detail-download:hover,.template-detail-editor:hover{background:#682aef}
 .template-detail-back{margin:0 0 24px;padding:0;border:0;background:transparent;color:#6b6b6b;font:600 14px/22px 'Gabarito',var(--font);cursor:pointer;transition:color .18s ease}
 .template-detail-back:hover{color:#9c75f0}
+.template-detail-breadcrumb{display:flex;align-items:center;gap:8px;margin:0 0 24px;color:#6b6b6b;font:600 14px/22px 'Gabarito',var(--font)}
+.template-detail-breadcrumb-link{padding:0;border:0;background:transparent;color:inherit;font:inherit;cursor:pointer;transition:color .18s ease}
+.template-detail-breadcrumb-link:hover{color:#9c75f0}
+.template-detail-breadcrumb-separator{color:#a6a6a6;font-weight:400}
+.template-detail-breadcrumb-current{color:#333;font-weight:600}
 .template-detail-specs{padding:0 38px 0 14px}
 .template-detail-spec{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:8px 0;border-bottom:1px solid #0d0d0d0f;font-size:12px;line-height:20px}
 .template-detail-spec:last-child{border-bottom:0}
@@ -3154,8 +3159,31 @@ function ensureGalleryPlaceholders(){
 
 function decorateTemplateBackButton(){
   var button = document.querySelector('.template-detail-back');
-  if (!button || button.querySelector('.template-detail-back-icon')) return;
-  button.innerHTML = '<span class="template-detail-back-icon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 3.5L6 8L10.5 12.5M6.5 8H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Back to Templates</span>';
+  if (!button || document.querySelector('.template-detail-breadcrumb')) return;
+  var title = document.querySelector('#page-detail h1');
+  var breadcrumbItems = ['Home','Resources','Templates'];
+  var nav = document.createElement('nav');
+  nav.className = 'template-detail-breadcrumb';
+  nav.setAttribute('aria-label','Breadcrumb');
+  breadcrumbItems.forEach(function(label){
+    var link = document.createElement('button');
+    link.className = 'template-detail-breadcrumb-link';
+    link.type = 'button';
+    link.textContent = label;
+    link.addEventListener('click',function(){ navigate('home'); });
+    nav.appendChild(link);
+    var separator = document.createElement('span');
+    separator.className = 'template-detail-breadcrumb-separator';
+    separator.setAttribute('aria-hidden','true');
+    separator.textContent = '›';
+    nav.appendChild(separator);
+  });
+  var current = document.createElement('span');
+  current.className = 'template-detail-breadcrumb-current';
+  current.setAttribute('aria-current','page');
+  current.textContent = title ? title.textContent : 'Template';
+  nav.appendChild(current);
+  button.replaceWith(nav);
 }
 decorateTemplateBackButton();
 ensureGalleryPlaceholders();
