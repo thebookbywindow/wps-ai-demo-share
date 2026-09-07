@@ -5,9 +5,9 @@ const source = fs.readFileSync('templates-inner.html', 'utf8');
 
 assert.match(source, /\.gallery-fixed-five \.template-detail-thumbs\{display:grid;/);
 assert.match(source, /function ensureGalleryPlaceholders\(\)/);
-assert.match(source, /\.template-detail-thumbs\{display:grid;grid-template-columns:repeat\(auto-fit,minmax\(120px,160px\)\);gap:13px;width:fit-content;max-width:100%;/);
-assert.match(source, /\.template-detail-thumbs\.gallery-count-4\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\);width:100%\}/);
-assert.match(source, /\.template-detail-thumbs\.gallery-count-5\{grid-template-columns:repeat\(5,minmax\(0,1fr\)\);width:100%\}/);
+assert.match(source, /\.template-detail-thumbs\{display:grid;gap:13px;width:fit-content;max-width:100%;/);
+assert.match(source, /\.template-detail-thumbs\.gallery-count-1\{grid-template-columns:repeat\(1,minmax\(0,1fr\)\);width:min\(100%,160px\)\}/);
+assert.match(source, /\.template-detail-thumbs\.gallery-count-5\{grid-template-columns:repeat\(5,minmax\(0,1fr\)\);width:min\(100%,852px\)\}/);
 assert.match(source, /realCount = thumbs\.querySelectorAll\('\.template-detail-thumb'\)\.length/);
 assert.doesNotMatch(source, /for \(var index = realCount; index < 5; index\+\+\)/);
 assert.doesNotMatch(source, /is-placeholder/);
