@@ -746,12 +746,13 @@ img{max-width:100%;display:block}
 .albums-empty-reset{margin-top:4px;padding:8px 18px;border:1px solid #8854f4;border-radius:999px;background:#fff;color:#7336dc;font:500 13px/18px var(--font);cursor:pointer;transition:color .2s ease,background-color .2s ease,box-shadow .2s ease,transform .2s ease}
 .albums-empty-reset:hover{background:#8854f4;color:#fff;box-shadow:0 5px 14px rgba(136,84,244,.25);transform:translateY(-1px)}
 .albums-empty-reset:focus-visible{outline:3px solid rgba(136,84,244,.24);outline-offset:3px}
-.albums-pagination{height:36px;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:12px}
+.albums-pagination{height:36px;margin-top:14px;display:flex;align-items:center;justify-content:center;gap:4px}
 .albums-page{width:36px;height:36px;border:1px solid #0d0d0d0f;border-radius:6px;background:#fff;color:#0d0d0d;font-family:var(--font);font-size:14px;line-height:20px;cursor:pointer;box-shadow:none;transition:background-color .18s,border-color .18s,color .18s}
 .albums-page:hover:not(.active){background:#0d0d0d0f}
 .albums-page.active{background:#1d70f5;color:#fff;border-color:#1d70f5}
 .albums-page:disabled{opacity:.38;cursor:default;background:#fff}
 .albums-page-arrow{font-family:var(--font);font-size:18px;line-height:1;display:block}
+.albums-pagination-ellipsis{width:20px;text-align:center;color:#767a83;font-size:14px;line-height:36px;user-select:none}
 [hidden]{display:none!important}
 
 /* Product Category Sections */
@@ -1076,6 +1077,7 @@ img{max-width:100%;display:block}
   .footer-brand{grid-column:1/-1}
   .footer-col:nth-child(4),.footer-col:nth-child(5){margin-top:0}
   .albums{width:calc(100% - 32px);padding-top:0}
+  .albums-pagination{height:auto;min-height:36px;flex-wrap:wrap;row-gap:8px;padding-bottom:2px}
   .cat-section,.why,.cta,.faq,.seo-block{padding-left:16px;padding-right:16px}
   .cat-content,.cat-seo{padding-left:16px;padding-right:16px}
   .detail{padding:0 16px 40px}
@@ -2368,8 +2370,10 @@ function templateSlug(value) {
 }
 function templateResourceBase() {
   var parentPath = window.parent && window.parent.location ? window.parent.location.pathname : '';
-  var localeMatch = parentPath.match(/^\/([a-z]{2}(?:-[a-z]{2})?)\/resources(?:\/|$)/i);
-  return '/' + (localeMatch ? localeMatch[1].toLowerCase() : 'en-us') + '/resources';
+  var pathMatch = parentPath.match(/^(.*)\/([a-z]{2}(?:-[a-z]{2})?)\/resources(?:\/|$)/i);
+  var basePath = pathMatch ? pathMatch[1] : '';
+  var locale = pathMatch ? pathMatch[2].toLowerCase() : 'en-us';
+  return basePath + '/' + locale + '/resources';
 }
 function templateRoutePath(page, cat, sub) {
   if (page === 'home') return templateResourceBase() + '/';
@@ -2569,8 +2573,8 @@ function renderCategoryPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      {'@type': 'ListItem', position: 1, name: 'WPS Templates', item: 'https://www.wps.ai/en-US/resources/'},
-      {'@type': 'ListItem', position: 2, name: catNames(currentCat), item: 'https://www.wps.ai/en-US/resources/' + catUrl(currentCat) + '/'}
+      {'@type': 'ListItem', position: 1, name: 'WPS Templates', item: templateResourceBase() + '/'},
+      {'@type': 'ListItem', position: 2, name: catNames(currentCat), item: templateResourceBase() + '/templates/' + catUrl(currentCat) + '/'}
     ]
   });
   document.head.appendChild(script);
@@ -2593,7 +2597,7 @@ function renderDetailPage() {
   ];
 
   var catUrlM = {presentation:'presentations', writer:'documents', spreadsheet:'spreadsheets', pdf:'pdf'};
-  var detailURL = 'https://www.wps.ai/en-US/resources/' + (catUrlM[t.cat]||t.cat) + '/' + t.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'') + '/';
+  var detailURL = templateResourceBase() + '/templates/' + (catUrlM[t.cat]||t.cat) + '/' + t.name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-$/,'') + '/';
 
   document.getElementById('page-detail').innerHTML =
     // Breadcrumb
@@ -2675,8 +2679,8 @@ function renderDetailPage() {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      {'@type': 'ListItem', position: 1, name: 'WPS Templates', item: 'https://www.wps.ai/en-US/resources/'},
-      {'@type': 'ListItem', position: 2, name: catNames(t.cat), item: 'https://www.wps.ai/en-US/resources/' + (catUrlM[t.cat]||t.cat) + '/'},
+      {'@type': 'ListItem', position: 1, name: 'WPS Templates', item: templateResourceBase() + '/'},
+      {'@type': 'ListItem', position: 2, name: catNames(t.cat), item: templateResourceBase() + '/templates/' + (catUrlM[t.cat]||t.cat) + '/' },
       {'@type': 'ListItem', position: 3, name: t.name, item: detailURL}
     ]
   });
@@ -2920,6 +2924,17 @@ var albumTemplateData = [
   ['Training Slides','presentation',1],['Case Study Report','documents',2],['Financial Forecast','spreadsheets',4],
   ['Creative Portfolio','presentation',5],['Policy Document','documents',6],['Timesheet Weekly','spreadsheets',8]
 ].map(function(item,index){return {id:index+1,title:item[0],type:item[1],sprite:item[2]};});
+var demoAlbumQualifiers = ['Modern','Minimal','Professional','Creative','Executive','Simple','Strategic','Annual','Corporate','Startup','Elegant','Clean','Bold','Team','Client','Growth','Finance','Marketing','Product','Planning'];
+var demoAlbumSeeds = [
+  ['Business Plan Presentation','presentation',1],['Marketing Plan Presentation','presentation',5],['Project Proposal Presentation','presentation',9],['Team Meeting Presentation','presentation',1],['Product Strategy Presentation','presentation',5],
+  ['Business Report Template','documents',2],['Project Brief Template','documents',6],['Meeting Notes Template','documents',10],['Company Profile Template','documents',2],['Client Proposal Template','documents',6],
+  ['Budget Planner Spreadsheet','spreadsheets',4],['Sales Tracker Spreadsheet','spreadsheets',8],['Project Schedule Spreadsheet','spreadsheets',12],['Finance Dashboard Spreadsheet','spreadsheets',4],['Inventory Tracker Spreadsheet','spreadsheets',8]
+];
+demoAlbumQualifiers.forEach(function(qualifier, qualifierIndex) {
+  demoAlbumSeeds.forEach(function(seed, seedIndex) {
+    albumTemplateData.push({id:albumTemplateData.length + 1,title:qualifier + ' ' + seed[0],type:seed[1],sprite:((seed[2] + qualifierIndex + seedIndex) % 12) + 1});
+  });
+});
 
 function albumTypeMeta(type) {
   if (type === 'presentation') return {label:'Presentation',icon:'albums-presentation.svg',iconClass:'full',theme:''};
@@ -2941,15 +2956,36 @@ function albumFilteredData() {
   });
 }
 
+function isAlbumCompactViewport() {
+  return window.matchMedia ? window.matchMedia('(max-width: 480px)').matches : window.innerWidth <= 480;
+}
+
+function albumPaginationPages(totalPages) {
+  if (totalPages <= 5) return Array.from({length: totalPages}, function(_, index) { return index + 1; });
+  if (isAlbumCompactViewport() && totalPages > 5) {
+    if (albumCurrentPage <= 2) return [1,2,'ellipsis',totalPages];
+    if (albumCurrentPage >= totalPages - 1) return [1,'ellipsis',totalPages - 1,totalPages];
+    return [1,'ellipsis',albumCurrentPage,'ellipsis',totalPages];
+  }
+  if (totalPages <= 7) return Array.from({length: totalPages}, function(_, index) { return index + 1; });
+  if (albumCurrentPage <= 3) return [1,2,3,4,5,'ellipsis',totalPages];
+  if (albumCurrentPage >= totalPages - 2) return [1,'ellipsis',totalPages - 4,totalPages - 3,totalPages - 2,totalPages - 1,totalPages];
+  return [1,'ellipsis',albumCurrentPage - 1,albumCurrentPage,albumCurrentPage + 1,'ellipsis',totalPages];
+}
+
 function renderAlbumPagination(totalPages) {
   var pagination = document.getElementById('albumsPagination');
   if (!pagination) return;
   pagination.hidden = totalPages <= 1;
   if (totalPages <= 1) { pagination.innerHTML = ''; return; }
   var html = '<button class="albums-page prev" type="button" aria-label="Previous page" onclick="goToAlbumPage(' + (albumCurrentPage - 1) + ')"' + (albumCurrentPage === 1 ? ' disabled' : '') + '><span class="albums-page-arrow" aria-hidden="true">&#8592;</span></button>';
-  for (var page = 1; page <= totalPages; page++) {
+  albumPaginationPages(totalPages).forEach(function(page) {
+    if (page === 'ellipsis') {
+      html += '<span class="albums-pagination-ellipsis" aria-hidden="true">…</span>';
+      return;
+    }
     html += '<button class="albums-page' + (page === albumCurrentPage ? ' active' : '') + '" type="button" onclick="goToAlbumPage(' + page + ')"' + (page === albumCurrentPage ? ' aria-current="page"' : '') + '>' + page + '</button>';
-  }
+  });
   html += '<button class="albums-page next" type="button" aria-label="Next page" onclick="goToAlbumPage(' + (albumCurrentPage + 1) + ')"' + (albumCurrentPage === totalPages ? ' disabled' : '') + '><span class="albums-page-arrow" aria-hidden="true">&#8594;</span></button>';
   pagination.innerHTML = html;
 }
@@ -2984,6 +3020,15 @@ function goToAlbumPage(page) {
   var albums = document.querySelector('.albums');
   if (albums) albums.scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+var albumPaginationResizeTimer;
+window.addEventListener('resize', function() {
+  window.clearTimeout(albumPaginationResizeTimer);
+  albumPaginationResizeTimer = window.setTimeout(function() {
+    var totalPages = Math.ceil(albumFilteredData().length / albumPageSize);
+    renderAlbumPagination(totalPages);
+  }, 120);
+});
 
 function filterAlbumTemplates(filter, control) {
   albumCurrentFilter = filter;
