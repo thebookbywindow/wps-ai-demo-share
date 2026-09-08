@@ -7,6 +7,7 @@ const templates = fs.readFileSync('templates-inner.html', 'utf8');
 assert.match(shell, /location\.pathname\.replace\(\/\^\\\/wps-ai-demo-share/);
 assert.match(shell, /path\.match\(\/\^\\\/\(\[a-z\]\{2\}/);
 assert.match(shell, /templatesLink\.setAttribute\('href',publicTemplatePath\('\/en-us\/resources\/'\)\)/);
+assert.match(shell, /templatesFrame\.src=templateAssetBasePath\(\)\+'\/templates-inner\.html\?v=7ba938d'/);
 assert.match(shell, /event\.data\?\.type==='shell-navigate'/);
 assert.match(shell, /const normalizedRoute=route\.startsWith\(prefix\+'\/'\)\?route\.slice\(prefix\.length\):route/);
 assert.match(shell, /function showLanding\(target='top'\)/);
