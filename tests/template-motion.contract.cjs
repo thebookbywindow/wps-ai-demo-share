@@ -1,10 +1,9 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 
-const source = fs.readFileSync('templates-inner.html', 'utf8');
+const source = fs.readFileSync('dist/templates-inner.html', 'utf8');
 
-assert.match(source, /<video class="hero-background-video" muted loop playsinline preload="none"/);
-assert.doesNotMatch(source, /<video class="hero-background-video" autoplay/);
-assert.ok(source.includes('.hero-background-video{display:none!important;'));
+assert.doesNotMatch(source, /<video class="hero-background-video"/);
+assert.doesNotMatch(source, /hero-background-loop\.mp4/);
 
-console.log('template motion contract passed');
+console.log('template motion removal contract passed');

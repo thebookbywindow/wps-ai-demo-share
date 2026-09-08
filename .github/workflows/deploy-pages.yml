@@ -38,8 +38,8 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Copy template iframe
-        run: cp templates-inner.html dist/templates-inner.html
+      - name: Prepare template iframe and static routes
+        run: node scripts/prepare-pages.mjs
 
       - name: Prepare SPA fallback
         run: cp dist/index.html dist/404.html
