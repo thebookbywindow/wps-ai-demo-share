@@ -13,9 +13,12 @@ const detail = path.join(
   'annual-business-report-template',
   'index.html'
 );
+const detailHtml = fs.readFileSync(detail, 'utf8');
 
 assert.doesNotMatch(iframe, /<video class="hero-background-video"/);
 assert.doesNotMatch(iframe, /hero-background-loop\.mp4/);
 assert.ok(fs.existsSync(detail), 'detail route must have a real static index.html');
+assert.match(detailHtml, /templates-inner\.html\?v=10a4e3a/);
+assert.ok(detailHtml.length < 20000, 'static routes must not duplicate the large app shell');
 
 console.log('static pages contract passed');

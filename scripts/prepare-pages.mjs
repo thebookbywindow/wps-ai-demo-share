@@ -6,7 +6,6 @@ const distRoot = path.join(projectRoot, 'dist');
 const templateSourcePath = path.join(projectRoot, 'templates-inner.html');
 const templateOutputPath = path.join(distRoot, 'templates-inner.html');
 
-const shell = fs.readFileSync(path.join(distRoot, 'index.html'), 'utf8');
 const templateSource = fs.readFileSync(templateSourcePath, 'utf8');
 const templateWithoutVideo = templateSource
   .replace(/\s*<video class="hero-background-video"[\s\S]*?<\/video>/, '')
@@ -41,6 +40,20 @@ const templates = [...templateSource.matchAll(/id:(\d+),n:'([^']+)',c:'([^']+)'/
 if (!templates.length) {
   throw new Error('No template records were found while generating static routes.');
 }
+
+const routeShell = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WPS Templates</title>
+  <style>html,body{margin:0;min-height:100%;background:#fff}body{min-height:100vh}iframe{display:block;width:100%;min-height:100vh;border:0}</style>
+</head>
+<body>
+  <iframe id="templatesFrame" title="WPS Templates" src="/wps-ai-demo-share/templates-inner.html?v=10a4e3a"></iframe>
+</body>
+</html>
+`;
 
 const routePaths = new Set([
   'en-us/resources/',
@@ -87,7 +100,7 @@ for (const template of templates) {
 for (const routePath of routePaths) {
   const routeIndexPath = path.join(distRoot, routePath, 'index.html');
   fs.mkdirSync(path.dirname(routeIndexPath), { recursive: true });
-  fs.writeFileSync(routeIndexPath, shell);
+  fs.writeFileSync(routeIndexPath, routeShell);
 }
 
 console.log(`Prepared ${templates.length} template records and ${routePaths.size} static routes.`);
