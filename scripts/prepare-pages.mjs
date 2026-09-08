@@ -51,6 +51,16 @@ const routeShell = `<!doctype html>
 </head>
 <body>
   <iframe id="templatesFrame" title="WPS Templates" src="/wps-ai-demo-share/templates-inner.html?v=10a4e3a"></iframe>
+  <script>
+    const templatesFrame = document.getElementById('templatesFrame');
+    templatesFrame.addEventListener('load', () => {
+      templatesFrame.contentWindow.navigateByPath(location.pathname + location.search);
+    });
+    window.addEventListener('message', (event) => {
+      if (event.source !== templatesFrame.contentWindow || event.data?.type !== 'template-route') return;
+      if (event.data.path) history.pushState(null, '', event.data.path);
+    });
+  </script>
 </body>
 </html>
 `;
