@@ -241,7 +241,8 @@ function currentTemplateRoute(){
 }
 function publicTemplatePath(route){
   const prefix=location.hostname.endsWith('.github.io')?'/wps-ai-demo-share':'';
-  return prefix+(route.startsWith('/')?route:'/'+route);
+  const normalizedRoute=route.startsWith(prefix+'/')?route.slice(prefix.length):route;
+  return prefix+(normalizedRoute.startsWith('/')?normalizedRoute:'/'+normalizedRoute);
 }
 templatesLink.setAttribute('href',publicTemplatePath('/en-us/resources/'));
 function applyTemplateRoute(route){

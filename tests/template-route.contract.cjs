@@ -8,6 +8,7 @@ assert.match(shell, /location\.pathname\.replace\(\/\^\\\/wps-ai-demo-share/);
 assert.match(shell, /path\.match\(\/\^\\\/\(\[a-z\]\{2\}/);
 assert.match(shell, /templatesLink\.setAttribute\('href',publicTemplatePath\('\/en-us\/resources\/'\)\)/);
 assert.match(shell, /event\.data\?\.type==='shell-navigate'/);
+assert.match(shell, /const normalizedRoute=route\.startsWith\(prefix\+'\/'\)\?route\.slice\(prefix\.length\):route/);
 assert.match(shell, /function showLanding\(target='top'\)/);
 assert.match(shell, /publicTemplatePath\('\/'\)\+`#\$\{target\}`/);
 assert.match(shell, /function showTemplates\(route='\/en-us\/resources\/'/);
